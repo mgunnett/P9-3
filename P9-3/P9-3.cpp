@@ -26,7 +26,7 @@ int main() {
     }
     cout << endl;
 
-    displayRun(values, SIZE);
+    displayRun(values, SIZE); 
 
     return 0;
 }
