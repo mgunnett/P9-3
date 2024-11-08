@@ -1,37 +1,54 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
-void displayRun(int values[], int size);
+void displayRun(int values[], int SIZE);
+bool hasRun(int values[], int SIZE);
 
 int main() {
-	int values[20] = { 1, 2, 2, 3, 4, 4, 4, 5, 1, 
-		1, 2, 3, 3, 3, 6, 6, 6, 6, 5, 5 };
+    const int SIZE = 20;
+    int values[SIZE];
 
-	displayRun(values, 20);
+    // Seed the random number generator
+    srand(time(0));
 
-	return 0;
+    // Generate random values for the array
+    for (int i = 0; i < SIZE; i++) {
+        values[i] = rand() % 6 + 1;
+    }
+
+    // Display the sequence and check for runs
+    cout << "Die values: ";
+    for (int i = 0; i < SIZE; ++i) {
+        cout << values[i] << " ";
+    }
+    cout << endl;
+
+    displayRun(values, SIZE);
+
+    return 0;
 }
 
-void displayRun(int values[], int size) {
-     for (int i = 0; i < size; i++) {
-          if (i == 0 || values[i] != values[i - 1]) {
-              if (i > 0 && values[i - 1] == values[i - 2]) {
-                    cout << ")";
-                }
-              if (i < size - 1 && values[i] == values[i + 1]) {
-                    cout << "(" << values[i];
-                }
-              else {
-                    cout << values[i];
-              }
-          }
-          else {
-                cout << values[i];
-          }
-     }
-     if (values[size - 1] == values[size - 2]) {
-            cout << ")";
-     }
-     cout << endl;
+void displayRun(int values[], int SIZE) {
+    for (int i = 0; i < SIZE; i++) {
+        if (values[i] == values[i + 1] && values[i] != values[i - 1]) {
+            cout << " (";
+        }
+        cout << " " << values[i];
+        if (values[i] != values[i + 1] && values[i] == values[i - 1]) {
+            cout << ") ";
+        }
+   }
 }
+
+bool hasRun(int values[], int SIZE) {
+    for (int i = 1; i < SIZE; ++i) {
+        if (values[i] == values[i - 1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
